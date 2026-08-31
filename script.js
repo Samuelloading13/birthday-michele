@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SCRIPT: COSMIC MIDNIGHT (18TH BIRTHDAY)
+   SCRIPT: COSMIC MIDNIGHT (18TH BIRTHDAY) - COMPLETE & FIXED
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,11 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initMusic();
 });
 
-/* 1. Canvas Particle Background (Bintang-bintang) */
+/* 1. Canvas Particle Background */
 function initParticles() {
     const canvas = document.getElementById("particle-canvas");
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    let particlesArray;
+    let particlesArray = [];
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -31,8 +32,8 @@ function initParticles() {
             ctx.fill();
         }
         update() {
-            if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
-            if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
+            if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+            if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
             this.x += this.directionX;
             this.y += this.directionY;
             this.draw();
@@ -44,12 +45,11 @@ function initParticles() {
         let numberOfParticles = (canvas.height * canvas.width) / 9000;
         for (let i = 0; i < numberOfParticles; i++) {
             let size = (Math.random() * 2) + 0.5;
-            let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-            let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+            let x = Math.random() * innerWidth;
+            let y = Math.random() * innerHeight;
             let directionX = (Math.random() * 0.4) - 0.2;
             let directionY = (Math.random() * 0.4) - 0.2;
-            let color = 'rgba(255, 255, 255, 0.4)';
-            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            particlesArray.push(new Particle(x, y, directionX, directionY, size, 'rgba(255, 255, 255, 0.4)'));
         }
     }
 
@@ -68,97 +68,156 @@ function initParticles() {
     init(); animate();
 }
 
-/* 2. Countdown Logic */
+/* 2. Audio Controller (Direct & Robust) */
+function initMusic() {
+    const audio = document.getElementById('bg-music');
+    const btn = document.getElementById('music-toggle');
+
+    if (!audio) {
+        console.error("Audio tag not found!");
+        return;
+    }
+
+    audio.volume = 1.0;
+
+    function playAudioSafe() {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    if (icon) icon.className = 'fas fa-pause';
+                }
+                console.log("Audio playing successfully!");
+            }).catch(e => {
+                console.warn("Audio play blocked / waiting for user interaction:", e);
+            });
+        }
+    }
+
+    function toggleAudio() {
+        const icon = btn ? btn.querySelector('i') : null;
+        if (audio.paused) {
+            audio.play().then(() => {
+                if (icon) icon.className = 'fas fa-pause';
+            }).catch(e => alert("Gagal memutar audio: " + e.message));
+        } else {
+            audio.pause();
+            if (icon) icon.className = 'fas fa-music';
+        }
+    }
+
+    if (btn) {
+        btn.onclick = function(e) {
+            e.stopPropagation();
+            toggleAudio();
+        };
+    }
+
+    // Putar lagu saat klik/tap pertama di mana saja
+    function startOnFirstClick() {
+        if (audio.paused) {
+            playAudioSafe();
+        }
+        document.removeEventListener('click', startOnFirstClick);
+        document.removeEventListener('touchstart', startOnFirstClick);
+    }
+
+    document.addEventListener('click', startOnFirstClick);
+    document.addEventListener('touchstart', startOnFirstClick);
+}
+
+/* 3. Countdown & Website Reveal */
 function initCountdown() {
     const targetDate = new Date("Sep 1, 2026 00:00:00").getTime();
     const countdownScreen = document.getElementById('countdown-screen');
     const mainSite = document.getElementById('main-site');
     const bypassBtn = document.getElementById('bypass-btn');
 
-    const timer = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-            clearInterval(timer);
-            revealWebsite();
-        } else {
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
-        }
-    }, 1000);
-
-    bypassBtn.addEventListener('click', () => {
-        clearInterval(timer);
+    // Karena sekarang sudah tanggal 1 Sept 2026, langsung buka web
+    const now = new Date().getTime();
+    if (now >= targetDate) {
         revealWebsite();
-    });
+    } else {
+        const timer = setInterval(() => {
+            const current = new Date().getTime();
+            const distance = targetDate - current;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                revealWebsite();
+            } else {
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                const hEl = document.getElementById('hours');
+                const mEl = document.getElementById('minutes');
+                const sEl = document.getElementById('seconds');
+                if (hEl) hEl.innerText = hours.toString().padStart(2, '0');
+                if (mEl) mEl.innerText = minutes.toString().padStart(2, '0');
+                if (sEl) sEl.innerText = seconds.toString().padStart(2, '0');
+            }
+        }, 1000);
+    }
+
+    if (bypassBtn) {
+        bypassBtn.addEventListener('click', () => {
+            revealWebsite();
+        });
+    }
 
     function revealWebsite() {
-        countdownScreen.classList.add('hidden');
+        const audio = document.getElementById('bg-music');
+        if (audio && audio.paused) {
+            audio.play().catch(() => {});
+        }
+
+        if (countdownScreen) countdownScreen.classList.add('hidden');
         
         setTimeout(() => {
-            countdownScreen.style.display = 'none';
-            mainSite.classList.add('visible');
-            
-            const audio = document.getElementById('bg-music');
-            const icon = document.querySelector('#music-toggle i');
-            audio.play().then(() => {
-                icon.className = 'fas fa-pause';
-            }).catch(e => console.log('Autoplay blocked.'));
+            if (countdownScreen) countdownScreen.style.display = 'none';
+            if (mainSite) mainSite.classList.add('visible');
 
             initTyping();
             initGSAP();
             initSwiper();
             fireMidnightConfetti();
-        }, 2000);
+        }, 1000);
     }
 }
 
-/* 3. Confetti Explosion at Midnight */
+/* 4. Confetti */
 function fireMidnightConfetti() {
-    const duration = 6 * 1000;
+    if (typeof confetti !== 'function') return;
+    const duration = 5 * 1000;
     const end = Date.now() + duration;
 
     (function frame() {
-        confetti({ particleCount: 7, angle: 60, spread: 60, origin: { x: 0 }, colors: ['#f472b6', '#ffffff', '#e2e8f0'], zIndex: 9999 });
-        confetti({ particleCount: 7, angle: 120, spread: 60, origin: { x: 1 }, colors: ['#f472b6', '#ffffff', '#e2e8f0'], zIndex: 9999 });
+        confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#f472b6', '#ffffff', '#e2e8f0'], zIndex: 9999 });
+        confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#f472b6', '#ffffff', '#e2e8f0'], zIndex: 9999 });
         if (Date.now() < end) requestAnimationFrame(frame);
     }());
 }
 
-/* 4. Custom Cursor */
+/* 5. Custom Cursor */
 function initCursor() {
     const dot = document.querySelector('.cursor-dot');
     const outline = document.querySelector('.cursor-outline');
+    if (!dot || !outline) return;
 
     window.addEventListener('mousemove', (e) => {
         dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`;
         outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 400, fill: "forwards" });
     });
-
-    const clickables = document.querySelectorAll('button, .interactive-candle, .swiper-slide');
-    clickables.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            outline.style.transform = 'translate(-50%, -50%) scale(2)';
-            outline.style.borderColor = 'rgba(244, 114, 182, 0.8)';
-            outline.style.backgroundColor = 'rgba(244, 114, 182, 0.15)';
-        });
-        el.addEventListener('mouseleave', () => {
-            outline.style.transform = 'translate(-50%, -50%) scale(1)';
-            outline.style.backgroundColor = 'transparent';
-        });
-    });
 }
 
-/* 5. Smooth Typing Effect */
+/* 6. Typing Effect */
 function initTyping() {
     const text = "A New Chapter Begins.";
     const element = document.querySelector('.typing-text');
+    if (!element) return;
+    element.innerHTML = '';
     let i = 0;
     
     function typeWriter() {
@@ -168,23 +227,25 @@ function initTyping() {
             setTimeout(typeWriter, 100);
         }
     }
-    setTimeout(typeWriter, 1500);
+    setTimeout(typeWriter, 500);
 }
 
-/* 6. GSAP Advanced Scroll Animations */
+/* 7. GSAP Animation */
 function initGSAP() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
     document.querySelectorAll('.gsap-fade-up').forEach((el) => {
         gsap.fromTo(el, 
-            { y: 60, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" } }
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.0, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" } }
         );
     });
 }
 
-/* 7. Swiper 3D Carousel Setup (FIXED FOR MOBILE) */
+/* 8. Swiper 3D Carousel */
 function initSwiper() {
+    if (typeof Swiper === 'undefined') return;
     const isMobile = window.innerWidth <= 768;
 
     new Swiper(".mySwiper", {
@@ -193,11 +254,11 @@ function initSwiper() {
         centeredSlides: true, 
         slidesPerView: "auto",
         coverflowEffect: { 
-            rotate: isMobile ? 0 : 10,   /* 0 untuk HP biar tegak lurus, 10 untuk Desktop */
+            rotate: isMobile ? 0 : 10,
             stretch: 0, 
-            depth: isMobile ? 120 : 250, /* Kurangi efek kedalaman di HP */
+            depth: isMobile ? 100 : 220,
             modifier: 1.2, 
-            slideShadows: !isMobile      /* Hilangkan bayangan bawaan Swiper di HP */
+            slideShadows: !isMobile
         },
         loop: true, 
         autoplay: { delay: 3500, disableOnInteraction: false },
@@ -205,60 +266,22 @@ function initSwiper() {
     });
 }
 
-/* 8. Floating Music Control & Auto-Unlock */
-function initMusic() {
-    const btn = document.getElementById('music-toggle');
-    const audio = document.getElementById('bg-music');
-    const icon = btn ? btn.querySelector('i') : null;
-
-    if (!audio) return;
-
-    audio.volume = 1.0;
-
-    function playAudio() {
-        audio.play().then(() => {
-            if (icon) icon.className = 'fas fa-pause';
-        }).catch(err => {
-            console.log("Menunggu interaksi pengguna:", err);
-        });
-    }
-
-    // Klik tombol musik bulat
-    if (btn) {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (audio.paused) {
-                playAudio();
-            } else {
-                audio.pause();
-                if (icon) icon.className = 'fas fa-music';
-            }
-        });
-    }
-
-    // Buka audio otomatis begitu layar diklik di mana saja
-    document.addEventListener('click', function startOnFirstClick() {
-        if (audio.paused) {
-            playAudio();
-        }
-        document.removeEventListener('click', startOnFirstClick);
-    }, { once: true });
-}
-
-/* 9. Scroll Smoothly */
+/* 9. Scroll */
 function scrollToSection(id) { 
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); 
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' }); 
 }
 
-/* 10. Interactive Candle Logic */
+/* 10. Candle Interaction */
 function blowCandle() {
     const flame = document.getElementById('candle-flame');
     const msg = document.getElementById('success-message');
     
-    if (!flame.classList.contains('blown-out')) {
+    if (flame && !flame.classList.contains('blown-out')) {
         flame.classList.add('blown-out'); 
-        msg.classList.add('show');
-        
-        confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 }, colors: ['#f472b6', '#fbbf24', '#ffffff'], zIndex: 9999 });
+        if (msg) msg.classList.add('show');
+        if (typeof confetti === 'function') {
+            confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 }, colors: ['#f472b6', '#fbbf24', '#ffffff'], zIndex: 9999 });
+        }
     }
 }
