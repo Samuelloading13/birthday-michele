@@ -1,0 +1,195 @@
+/* ==========================================================================
+   STYLESHEET: COSMIC MIDNIGHT (18TH BIRTHDAY)
+   ========================================================================== */
+
+:root {
+    --bg-main: #050814;
+    --bg-secondary: #0b1121;
+    --text-main: #f8fafc;
+    --text-muted: #cbd5e1;
+    --accent: #f472b6;
+    --accent-glow: rgba(244, 114, 182, 0.6);
+    --glass-bg: rgba(15, 23, 42, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* ANTI GESER & OVERFLOW FIX */
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+* { box-sizing: border-box; cursor: none; }
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background-color: var(--bg-main);
+    color: var(--text-main); 
+    scroll-behavior: smooth;
+}
+
+#particle-canvas {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1; background: radial-gradient(circle at bottom, #111827 0%, #050814 100%);
+}
+
+.cursor-dot { width: 6px; height: 6px; background: var(--accent); position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; box-shadow: 0 0 10px var(--accent); }
+.cursor-outline { width: 40px; height: 40px; border: 1px solid var(--accent); position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: transform 0.1s; opacity: 0.6; }
+
+h1, h2, h3 { line-height: 1.3; margin: 0; }
+.elegant-font { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-style: italic; color: var(--text-main); }
+.highlight { color: var(--accent); font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;}
+.highlight-text { font-weight: 600; color: var(--accent); }
+.text-center { text-align: center !important; }
+.text-accent { color: var(--accent); }
+.subtitle-text { color: var(--text-muted); font-size: 1.1rem; font-weight: 300; }
+
+/* --- EPIC COUNTDOWN SCREEN --- */
+#countdown-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; transition: opacity 2s ease, visibility 2s ease;
+    background: inherit; backdrop-filter: blur(8px);
+}
+#countdown-screen.hidden { opacity: 0; visibility: hidden; }
+
+.countdown-content { text-align: center; z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; padding: 0 20px;}
+.snoopy-wait { width: 130px; margin-bottom: 25px; filter: drop-shadow(0 0 20px var(--accent-glow)); animation: float 4s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+.glow-text { font-size: 3.8rem; font-weight: 700; margin-bottom: 10px; font-family: 'Playfair Display', serif; text-shadow: 0 0 35px var(--accent-glow); }
+
+.timer-container { display: flex; gap: 30px; justify-content: center; margin: 40px 0; }
+.time-ring {
+    width: 130px; height: 130px; border-radius: 50%;
+    background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px);
+    border: 2px solid var(--accent);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px var(--accent-glow);
+    animation: pulse-glow 2s infinite alternate;
+}
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 15px rgba(244, 114, 182, 0.4), inset 0 0 15px rgba(244, 114, 182, 0.4); }
+    100% { box-shadow: 0 0 40px rgba(244, 114, 182, 0.8), inset 0 0 40px rgba(244, 114, 182, 0.8); }
+}
+.time-ring span { font-size: 3rem; font-weight: 700; color: #fff; line-height: 1; text-shadow: 0 0 10px var(--accent-glow);}
+.time-ring small { font-size: 0.9rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; font-weight: 600;}
+
+.outline-btn { margin-top: 50px; padding: 12px 30px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); border-radius: 30px; font-family: 'Plus Jakarta Sans'; font-size: 0.8rem; transition: all 0.3s; }
+.outline-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --- Main Website --- */
+#main-site { opacity: 0; visibility: hidden; transition: opacity 2.5s ease; }
+#main-site.visible { opacity: 1; visibility: visible; }
+.container { width: 100%; max-width: 900px; margin: 0 auto; padding: 0 25px; box-sizing: border-box; }
+section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 0; overflow: hidden;}
+
+.glass-btn { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); color: var(--text-main); width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; z-index: 1000; transition: transform 0.3s; box-shadow: var(--shadow); }
+.glass-btn:hover { transform: scale(1.1); border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow); color: var(--accent); }
+.floating-music { position: fixed; bottom: 35px; right: 35px; }
+
+.hero { position: relative; text-align: center; }
+.hero-content { z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
+.badge-glass { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 30px; backdrop-filter: blur(10px); }
+.title { font-size: 5rem; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; line-height: 1.1;}
+.subtitle { font-size: 1.3rem; height: 35px; color: var(--text-muted); font-weight: 300; }
+.scroll-btn { margin-top: 50px; padding: 16px 45px; border: none; border-radius: 50px; background: var(--accent); color: white; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; font-weight: 600; transition: transform 0.3s; box-shadow: 0 10px 30px var(--accent-glow); }
+.scroll-btn:hover { transform: translateY(-5px); }
+
+.glass-panel { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 70px 60px; box-shadow: var(--shadow); text-align: center; position: relative; overflow: hidden; width: 100%; }
+.glass-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+.message-body { margin-top: 35px; font-size: 1.15rem; line-height: 2; color: var(--text-muted); display: flex; flex-direction: column; gap: 20px; }
+
+.section-title { width: 100%; display: block; margin: 0 auto 20px auto; }
+
+/* 3D Swiper Gallery */
+.gallery-section { padding-top: 50px; }
+.swiper { width: 100%; padding: 50px 0 80px 0; }
+.swiper-slide { background-position: center; background-size: cover; width: 320px; height: 450px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.8); position: relative; border: 1px solid rgba(255,255,255,0.1); }
+.swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.slide-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white; font-weight: 400; text-align: center; font-size: 1.2rem; }
+
+.letter-section { display: flex; justify-content: center; }
+.letter-box { padding: 60px 50px; background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)); border: 1px solid rgba(244, 114, 182, 0.3); }
+.quote-icon { font-size: 2.5rem; color: var(--accent); opacity: 0.3; position: absolute; }
+.quote-icon { top: 30px; left: 30px; }
+.quote-icon.right { bottom: 30px; right: 30px; }
+.letter-text { font-size: 1.3rem; font-style: italic; line-height: 2.2; color: #f8fafc; margin: 20px 0; font-family: 'Playfair Display', serif; }
+
+.wish-section { position: relative; }
+.instruction { font-size: 1.1rem; color: var(--text-muted); margin-top: 15px; margin-bottom: 60px; font-weight: 300;}
+.interactive-candle { width: 70px; height: 140px; margin: 0 auto; position: relative; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s; }
+.interactive-candle:hover { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(255,255,255,0.2)); }
+.candle-body { width: 45px; height: 110px; background: linear-gradient(to right, #cbd5e1, #ffffff); border-radius: 6px; box-shadow: inset -5px 0 15px rgba(0,0,0,0.3); }
+.flame { width: 22px; height: 40px; background: #fbbf24; border-radius: 50% 50% 20% 20%; margin-bottom: -5px; box-shadow: 0 0 25px #fbbf24, 0 0 50px #f59e0b; animation: flicker 0.4s infinite alternate; transition: opacity 0.5s ease; }
+.flame.blown-out { opacity: 0; box-shadow: none; animation: none; }
+@keyframes flicker { 0% { transform: scale(1) rotate(-2deg); opacity: 0.9; } 100% { transform: scale(1.1) rotate(2deg); opacity: 1; } }
+
+.hidden-message { opacity: 0; transform: translateY(20px); transition: all 0.8s ease; margin-top: 40px; font-size: 1.4rem; font-weight: 500; color: var(--accent); font-family: 'Playfair Display', serif; font-style: italic;}
+.hidden-message.show { opacity: 1; transform: translateY(0); }
+
+.snoopy-footer { margin-top: 100px; display: flex; flex-direction: column; align-items: center; opacity: 0.6; transition: opacity 0.3s; width: 100%;}
+.snoopy-footer:hover { opacity: 1; }
+.copyright { margin-top: 20px; font-size: 0.95rem; color: var(--text-muted); text-align: center !important; line-height: 1.8; letter-spacing: 1px;}
+
+/* ==========================================================================
+   MOBILE & TOUCH OPTIMIZATION (GABUNGAN & ANTI GESER)
+   ========================================================================== */
+@media (max-width: 768px) {
+    * { cursor: auto !important; }
+    .cursor-dot, .cursor-outline { display: none !important; }
+
+    .hero { padding: 80px 15px 40px 15px; }
+    .title { font-size: 3.2rem; line-height: 1.15; }
+    .subtitle { font-size: 1.05rem; }
+    .badge-glass { font-size: 0.75rem; padding: 6px 16px; }
+    .scroll-btn { padding: 12px 30px; font-size: 0.95rem; margin-top: 30px; }
+
+    .glow-text { font-size: 2.2rem; }
+    .timer-container { gap: 12px; margin: 25px 0; }
+    .time-ring { width: 85px; height: 85px; }
+    .time-ring span { font-size: 1.8rem; }
+    .time-ring small { font-size: 0.65rem; }
+    .snoopy-wait { width: 95px; }
+
+    .container { padding: 0 15px; width: 100%; overflow: hidden; }
+    
+    .glass-panel { 
+        padding: 40px 20px; 
+        border-radius: 18px; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center !important; 
+    }
+    
+    .elegant-font { font-size: 2.2rem !important; text-align: center !important; width: 100%; display: block; }
+    .subtitle-text { text-align: center !important; width: 100%; display: block; margin-bottom: 20px !important;}
+    .message-body { font-size: 1rem; line-height: 1.75; gap: 15px; text-align: center !important; }
+
+    /* SWIPER FIX: Cegah foto kepotong & geser */
+    .gallery-section { padding: 40px 0; width: 100vw; overflow: hidden; }
+    .swiper { width: 100%; padding: 20px 0 50px 0 !important; }
+    .swiper-slide { 
+        width: 260px !important; 
+        height: 380px !important; 
+        border-radius: 16px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    }
+    .slide-overlay { font-size: 1rem !important; padding: 15px !important; text-align: center !important; }
+    .swiper-pagination { bottom: 10px !important; }
+
+    .letter-box { padding: 40px 20px; text-align: center !important; }
+    .letter-text { font-size: 1.1rem; line-height: 1.85; text-align: center !important; }
+    .quote-icon { font-size: 1.8rem; }
+    .quote-icon { top: 15px; left: 15px; }
+    .quote-icon.right { bottom: 15px; right: 15px; }
+    
+    .interactive-candle { transform: scale(0.9); margin: 0 auto; }
+    .instruction { text-align: center !important; }
+    .floating-music { bottom: 20px; right: 20px; width: 46px; height: 46px; font-size: 1rem; }
+}

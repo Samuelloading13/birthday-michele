@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 18: Michele ✨</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,600&display=swap" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio id="bg-music" loop preload="auto" src="https://files.catbox.moe/kel9ix.mp3"></audio>
+
+    <!-- Interactive Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- EPIC COUNTDOWN SCREEN -->
+    <div id="countdown-screen" class="active">
+        <div class="countdown-content">
+            <img src="https://media.tenor.com/7b7d-eKIf9cAAAAi/snoopy-peanuts.gif" alt="Snoopy Waiting" class="snoopy-wait">
+            <h1 class="glow-text">Midnight Magic ✨</h1>
+            <p class="subtitle-text" style="margin-bottom: 30px;">Tungguin aja wok...</p>
+            
+            <!-- Glowing Neon Timer -->
+            <div class="timer-container">
+                <div class="time-ring">
+                    <span id="hours">00</span>
+                    <small>Hours</small>
+                </div>
+                <div class="time-ring">
+                    <span id="minutes">00</span>
+                    <small>Mins</small>
+                </div>
+                <div class="time-ring">
+                    <span id="seconds">00</span>
+                    <small>Secs</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN WEBSITE -->
+    <main id="main-site" class="hidden">
+        <button id="music-toggle" class="glass-btn floating-music">
+            <i class="fas fa-music"></i>
+        </button>
+
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+
+        <section class="hero" id="hero">
+            <div class="hero-content gsap-fade-up">
+                <div class="badge-glass">
+                    <i class="fas fa-star text-accent"></i> 1 SEPTEMBER 2026
+                </div>
+                <h1 class="title">Chapter 18:<br><span class="highlight">Michele Tiara</span></h1>
+                <p class="subtitle typing-text"></p>
+                <button class="scroll-btn" onclick="scrollToSection('message')">
+                    Let's Begin <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+        </section>
+
+        <section class="message-section" id="message">
+            <div class="container">
+                <div class="glass-panel gsap-fade-up">
+                    <h2 class="elegant-font">Welcome to 18! 🎉</h2>
+                    <div class="message-body">
+                        <p>Happy 18th Birthday, Michele Tiara Van Amelia! <i>Welcome to the adult club</i> (tapi dimataku masih bocil, aowkaokwoak). Di umur yang baru ini, pastinya bakal banyak banget <i>new chapters</i> yang menanti buat kamu tulis.</p>
+                        
+                        <p>Apalagi sekarang kamu udah resmi jadi <span class="highlight-text">Mahasiswa Fakultas Hukum Universitas Jember</span>. <i>I know law school is going to be a hell of a ride</i>, pasti bakal banyak tugas, bacaan tebal, dan momen-momen yang bikin capek. Tapi aku yakin 100%, cewek secerdas dan sekuat kamu pasti bisa <i>conquer it all</i>.</p>
+                        
+                        <p>Semoga di usia 18 ini, kamu makin bersinar, makin dewasa, dan semua impian besar yang kamu simpan bisa pelan-pelan jadi nyata. <i>You truly deserve all the beautiful things this world has to offer!</i></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- 3D GALLERY (15 PHOTOS) -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title text-center gsap-fade-up elegant-font">Captured Moments 📸</h2>
+            <p class="text-center subtitle-text gsap-fade-up" style="margin-bottom: 40px;">Swipe untuk melihat 15 momen manis Michele</p>
+            
+            <div class="swiper mySwiper gsap-fade-up">
+                <div class="swiper-wrapper">
+                    
+                    <!-- Foto 1 -->
+                    <div class="swiper-slide">
+                        <img src="1.jpeg" alt="Michele 1">
+                        <div class="slide-overlay"><i>Future Lawyer</i> ⚖️</div>
+                    </div>
+
+                    <!-- Foto 2 -->
+                    <div class="swiper-slide">
+                        <img src="2.jpeg" alt="Michele 2">
+                        <div class="slide-overlay"><i>Happy vibe</i> 🌙</div>
+                    </div>
+
+                    <!-- Foto 3 -->
+                    <div class="swiper-slide">
+                        <img src="3.jpeg" alt="Michele 3">
+                        <div class="slide-overlay"><i>Sweet Eighteen</i> 🤍</div>
+                    </div>
+
+                    <!-- Foto 4 -->
+                    <div class="swiper-slide">
+                        <img src="4.jpeg" alt="Michele 4">
+                        <div class="slide-overlay"><i>Sun-kissed</i> ☀️</div>
+                    </div>
+
+                    <!-- Foto 5 -->
+                    <div class="swiper-slide">
+                        <img src="5.jpeg" alt="Michele 5">
+                        <div class="slide-overlay"><i>That beautiful smile</i> 😊</div>
+                    </div>
+
+                    <!-- Foto 6 -->
+                    <div class="swiper-slide">
+                        <img src="6.jpeg" alt="Michele 6">
+                        <div class="slide-overlay"><i>Happy energy</i> 🌟</div>
+                    </div>
+
+                    <!-- Foto 7 -->
+                    <div class="swiper-slide">
+                        <img src="7.jpeg" alt="Michele 7">
+                        <div class="slide-overlay"><i>OOTD check</i> 👗</div>
+                    </div>
+
+                    <!-- Foto 8 -->
+                    <div class="swiper-slide">
+                        <img src="8.jpeg" alt="Michele 8">
+                        <div class="slide-overlay"><i>My favorite view</i> 🌸</div>
+                    </div>
+
+                    <!-- Foto 9 -->
+                    <div class="swiper-slide">
+                        <img src="9.jpeg" alt="Michele 9">
+                        <div class="slide-overlay"><i>Graceful</i> 💫</div>
+                    </div>
+
+                    <!-- Foto 10 -->
+                    <div class="swiper-slide">
+                        <img src="10.jpeg" alt="Michele 10">
+                        <div class="slide-overlay"><i>Gorgeous as always</i> ✨</div>
+                    </div>
+
+                    <!-- Foto 11 -->
+                    <div class="swiper-slide">
+                        <img src="11.jpeg" alt="Michele 11">
+                        <div class="slide-overlay"><i>Always charming</i> 🌷</div>
+                    </div>
+
+                    <!-- Foto 12 -->
+                    <div class="swiper-slide">
+                        <img src="12.jpeg" alt="Michele 12">
+                        <div class="slide-overlay"><i>Mirror moments</i> 📸</div>
+                    </div>
+
+                    <!-- Foto 13 -->
+                    <div class="swiper-slide">
+                        <img src="13.jpeg" alt="Michele 13">
+                        <div class="slide-overlay"><i>Little memories</i> 💕</div>
+                    </div>
+
+                    <!-- Foto 14 -->
+                    <div class="swiper-slide">
+                        <img src="14.jpeg" alt="Michele 14">
+                        <div class="slide-overlay"><i>Random & cute</i> 🤪</div>
+                    </div>
+
+                    <!-- Foto 15 -->
+                    <div class="swiper-slide">
+                        <img src="15.jpeg" alt="Michele 15">
+                        <div class="slide-overlay"><i>Ready for 18!</i> 🎂</div>
+                    </div>
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+        <section class="letter-section" id="letter">
+            <div class="container">
+                <div class="glass-panel letter-box gsap-fade-up">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p class="letter-text">
+                        "I just want you to know, <b>I'll always be here for you</b>. Kalau nanti tugas kuliah lagi numpuk, hari lagi terasa berat, atau sekadar butuh teman ngobrol, <i>you can always count on me</i>. Aku bakal selalu ada buat dengerin ceritamu, kita bakalan beli butterscotch dan nyari matcha, <i>celebrating your small wins, and being your safe space through the hard times</i>. Terus jadi Michele yang punya hati tulus ya. <i>Happy birthday, beautiful!</i>"
+                    </p>
+                    <i class="fas fa-quote-right quote-icon right"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="wish-section" id="wish">
+            <div class="container text-center gsap-fade-up">
+                <h2 class="elegant-font">Make a Wish 🕯️</h2>
+                <p class="instruction">Tutup matamu, rapalkan harapan terbaikmu, lalu sentuh lilin ini.</p>
+                
+                <div class="interactive-candle" onclick="blowCandle()">
+                    <div class="flame" id="candle-flame"></div>
+                    <div class="candle-body"></div>
+                </div>
+                
+                <p id="success-message" class="hidden-message">
+                    <i>Wish sent to the stars!</i> ✨
+                </p>
+                
+                <div class="snoopy-footer">
+                    <img src="love-you.gif" alt="Snoopy Dance" width="90">
+                    <p class="copyright">Crafted with ❤️ for Michele Tiara Van Amelia <br> Samuel Gurning • 2026</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
