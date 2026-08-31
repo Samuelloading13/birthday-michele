@@ -208,8 +208,8 @@ function initSwiper() {
 /* 8. Floating Music Control & Auto-Unlock */
 function initMusic() {
     const btn = document.getElementById('music-toggle');
-    const icon = btn ? btn.querySelector('i') : null;
     const audio = document.getElementById('bg-music');
+    const icon = btn ? btn.querySelector('i') : null;
 
     if (!audio) return;
 
@@ -218,12 +218,12 @@ function initMusic() {
     function playAudio() {
         audio.play().then(() => {
             if (icon) icon.className = 'fas fa-pause';
-        }).catch((err) => {
-            console.log("Audio menunggu interaksi klik:", err);
+        }).catch(err => {
+            console.log("Menunggu interaksi pengguna:", err);
         });
     }
 
-    // Tombol musik mengambang (klik manual)
+    // Klik tombol musik bulat
     if (btn) {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -236,16 +236,13 @@ function initMusic() {
         });
     }
 
-    // Buka audio otomatis saat sentuhan pertama di layar HP / klik tombol
-    const unlockEvents = ['touchstart', 'touchend', 'click', 'pointerdown'];
-    function unlockHandler() {
+    // Buka audio otomatis begitu layar diklik di mana saja
+    document.addEventListener('click', function startOnFirstClick() {
         if (audio.paused) {
             playAudio();
         }
-        unlockEvents.forEach(evt => document.removeEventListener(evt, unlockHandler));
-    }
-
-    unlockEvents.forEach(evt => document.addEventListener(evt, unlockHandler, { passive: true }));
+        document.removeEventListener('click', startOnFirstClick);
+    }, { once: true });
 }
 
 /* 9. Scroll Smoothly */
